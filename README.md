@@ -3,3 +3,5 @@ Proyección y rotación de cubo en HTML/Javascrip usando Canvas basado en el tut
 
 Screenshot:
 <img width="1155" height="821" alt="image" src="https://github.com/user-attachments/assets/c8a5d389-a158-4d5d-94ac-783620dd0094" />
+
+Thank you to https://github.com/tsoding 👍
