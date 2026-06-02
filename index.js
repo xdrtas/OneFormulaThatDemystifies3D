@@ -118,11 +118,15 @@ function screen(p) {
 // y' = y / z
 function project({x, y, z}) {
     const scale = 1 / z;
-
+    const FOV = Math.PI / 2; // 45 degrees field of view
+    const aspectRatio = game.width / game.height;
+    const f = 1 / Math.tan(FOV / 2);
+    const projectedX = (x * f * aspectRatio)/z;
+    const projectedY = (y * f)/z;
     showProjectZ.innerText = "z: " + z.toFixed(4) + " | scale: " + scale.toFixed(4);
     return {
-        x: x * scale,
-        y: y * scale
+        x: projectedX,
+        y: projectedY
     };
 }
 
