@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Polar vs Rotación</title>
+  <style>
+    canvas { background: #111; display: block; margin: auto; }
+  </style>
+</head>
+<body>
+
+<canvas id="c" width="500" height="500"></canvas>
+
+<script>
+const canvas = document.getElementById("c");
+const ctx = canvas.getContext("2d");
+
+const cx = canvas.width / 2;
+const cy = canvas.height / 2;
+
+let angle = 0;
+const r = 250;
+
+function draw() {
+  ctx.clearRect(0,0,500,500);
+
+  // ejes
+  ctx.strokeStyle = "#333";
+  ctx.beginPath();
+  ctx.moveTo(cx,0); ctx.lineTo(cx,500);
+  ctx.moveTo(0,cy); ctx.lineTo(500,cy);
+  ctx.stroke();
+
+  // =========================
+  // 🟡 MÉTODO POLAR
+  // =========================
+  const px = cx + Math.cos(angle) * r;
+  const py = cy + Math.sin(angle) * r;
+
+  ctx.strokeStyle = "lime";
+  ctx.beginPath();
+  ctx.moveTo(cx,cy);
+  ctx.lineTo(px,py);
+  ctx.stroke();
+
+  ctx.fillStyle = "lime";
+  ctx.beginPath();
+  ctx.arc(px,py,5,0,Math.PI*2);
+  ctx.fill();
+
+  // =========================
+  // 🔵 MÉTODO ROTACIÓN
+  // =========================
+  const x0 = r; // vector base (r,0)
+
+  const rx = x0 * Math.cos(angle) - 0 * Math.sin(angle);
+  const ry = x0 * Math.sin(angle) + 0 * Math.cos(angle);
+
+  const gx = cx + rx;
+  const gy = cy + ry;
+
+  ctx.strokeStyle = "red";
+  ctx.beginPath();
+  ctx.moveTo(cx,cy);
+  ctx.lineTo(gx,gy);
+  ctx.stroke();
+
+  ctx.fillStyle = "red";
+  ctx.beginPath();
+  ctx.arc(gx,gy,5,0,Math.PI*2);
+  ctx.fill();
+
+  angle += 0.02;
+
+  requestAnimationFrame(draw);
+}
+
+draw();
+</script>
+
+</body>
+</html>

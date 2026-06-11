@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Polar vs Rotación</title>
+  <style>
+    canvas { background: #111; display: block; margin: auto; }
+  </style>
+</head>
+<body>
+
+    <canvas id="c" width="500" height="500"></canvas>
+
+<script>
+const c = document.getElementById("c");
+const ctx = c.getContext("2d");
+
+let pos = { x: 250, y: 250 };
+let speed = 3;
+
+let keys = {};
+
+window.addEventListener("keydown", e => keys[e.key] = true);
+window.addEventListener("keyup", e => keys[e.key] = false);
+
+// =========================
+// 🟡 MÉTODO POLAR
+// =========================
+function update() {
+  let x = 0;
+  let y = 0;
+
+  if (keys["w"]) y -= 1;
+  if (keys["s"]) y += 1;
+  if (keys["a"]) x -= 1;
+  if (keys["d"]) x += 1;
+
+  // magnitud(hipotenusa) √(x² + y²) === Math.sqrt(x*x + y*y)
+  let mag = Math.sqrt(x*x + y*y);
+
+  // evitar división por 0
+  if (mag > 0) {
+    x /= mag; // normalizar el vector (x,y) a longitud 1
+    y /= mag; // normalizar el vector (x,y) a longitud 1
+  }
+
+  pos.x += x * speed; // mover en dirección (x,y) con la velocidad dada
+  pos.y += y * speed; // mover en dirección (x,y) con la velocidad dada
+}
+
+// =========================
+// 🔵 MÉTODO ROTACIÓN
+// =========================
+function draw() {
+  ctx.clearRect(0,0,500,500);
+
+  ctx.fillStyle = "red";
+  ctx.beginPath();
+  ctx.arc(pos.x, pos.y, 10, 0, Math.PI*2);
+  ctx.fill();
+}
+
+// =========================
+// 🟡 Bucle de renderizado 
+// y animación
+// =========================
+function loop() {
+  update();
+  draw();
+  requestAnimationFrame(loop);
+}
+
+loop();
+</script>
+</body>
+</html>
